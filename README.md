@@ -1,22 +1,20 @@
-# XML parser
+# Jar file Utility
+
 ## Overview
 
 ## Usage
-TBD
+
+- When the project needs package name list from dependent jar file
+  - Use `JarPackageFinder#collectPackageNameFromJar()`
+- When the project needs package name list with given jar file path
+  - Use `JarPackageFinder#collectPackageNameFromJarPath()`
+
+Note that all process throws the exception, `JarFileReferenceException` when the process cannot access to the jar file.
 
 ## Development
+
 This application is built with the environment bellow;
 
 - OpenJDK 17
-- Spring boot 3.1.1
 - IntelliJ IDEA 2023.1.2
-
-Note that this module is needed the gradle.properties on the root directory.
-The property file is used when the module is published to GitHub Package manager.  
-Here is an example of the gradle.properties bellow (name must be set as your name);
-
-```properties
-GITHUB_USERNAME = zoeque
-GITHUB_TOKEN = [[TOKEN]]
-```
 

@@ -56,4 +56,26 @@ public class JarPackageFinder {
     }
     return packages;
   }
+
+  public static List<String> collectPackageNameFromJarPath(String jarFilePath) throws JarFileReferenceException {
+    List<String> packages = new ArrayList<>();
+    try {
+      URL jarUrl = new URL("jar:file:" + jarFilePath + "!/");
+      JarFile jarFile = ((JarURLConnection) jarUrl.openConnection()).getJarFile();
+      Enumeration<JarEntry> entries = jarFile.entries();
+      while (entries.hasMoreElements()) {
+        JarEntry entry = entries.nextElement();
+        if (entry.getName().endsWith(".class")) {
+          String className = entry.getName().replace("/", ".").replace(".class", "");
+          String packageName = className.substring(0, className.lastIndexOf('.'));
+          if (!packages.contains(packageName)) {
+            packages.add(packageName);
+          }
+        }
+      }
+    } catch (IOException e) {
+      throw new JarFileReferenceException(e);
+    }
+    return packages;
+  }
 }
